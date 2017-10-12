@@ -14,7 +14,7 @@
 #include "sendcoinsentry.h"
 #include "walletmodel.h"
 #include "coincontrol.h"
-#include "zpivcontroldialog.h"
+#include "zarccontroldialog.h"
 
 #include <QClipboard>
 #include <QSettings>
@@ -28,14 +28,14 @@ PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent),
     nDisplayUnit = 0; // just make sure it's not unitialized
     ui->setupUi(this);
 
-    // "Spending 999999 zPIV ought to be enough for anybody." - Bill Gates, 2017
-    ui->zPIVpayAmount->setValidator( new QDoubleValidator(0.0, 21000000.0, 20, this) );
+    // "Spending 999999 zARC ought to be enough for anybody." - Bill Gates, 2017
+    ui->zARCpayAmount->setValidator( new QDoubleValidator(0.0, 21000000.0, 20, this) );
     ui->labelMintAmountValue->setValidator( new QIntValidator(0, 999999, this) );
 
     // Default texts for (mini-) coincontrol
     ui->labelCoinControlQuantity->setText (tr("Coins automatically selected"));
     ui->labelCoinControlAmount->setText (tr("Coins automatically selected"));
-    ui->labelzPIVSyncStatus->setText("(" + tr("out of sync") + ")");
+    ui->labelzARCSyncStatus->setText("(" + tr("out of sync") + ")");
 
     // Sunken frame for minting messages
     ui->TEMintStatus->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
@@ -64,7 +64,7 @@ PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent),
     ui->labelzDenom7Text->setText("Denom. with value <b>1000</b>:");
     ui->labelzDenom8Text->setText("Denom. with value <b>5000</b>:");
 
-    // PIVX settings
+    // ArepaCoin settings
     QSettings settings;
     if (!settings.contains("nSecurityLevel")){
         nSecurityLevel = 42;
@@ -126,17 +126,17 @@ void PrivacyDialog::on_addressBookButton_clicked()
     dlg.setModel(walletModel->getAddressTableModel());
     if (dlg.exec()) {
         ui->payTo->setText(dlg.getReturnValue());
-        ui->zPIVpayAmount->setFocus();
+        ui->zARCpayAmount->setFocus();
     }
 }
 
-void PrivacyDialog::on_pushButtonMintzPIV_clicked()
+void PrivacyDialog::on_pushButtonMintzARC_clicked()
 {
     if (!walletModel || !walletModel->getOptionsModel())
         return;
 
     if (GetAdjustedTime() < GetSporkValue(SPORK_17_ENABLE_ZEROCOIN)) {
-        QMessageBox::information(this, tr("Mint Zerocoin"), tr("Zerocoin functionality is not enabled on the PIVX network yet."), QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::information(this, tr("Mint Zerocoin"), tr("Zerocoin functionality is not enabled on the ArepaCoin network yet."), QMessageBox::Ok, QMessageBox::Ok);
         return;
     }
 
@@ -163,7 +163,7 @@ void PrivacyDialog::on_pushButtonMintzPIV_clicked()
         return;
     }
 
-    ui->TEMintStatus->setPlainText(tr("Minting ") + ui->labelMintAmountValue->text() + " zPIV...");
+    ui->TEMintStatus->setPlainText(tr("Minting ") + ui->labelMintAmountValue->text() + " zARC...");
     ui->TEMintStatus->repaint ();
     
     int64_t nTime = GetTimeMillis();
@@ -181,7 +181,7 @@ void PrivacyDialog::on_pushButtonMintzPIV_clicked()
     double fDuration = (double)(GetTimeMillis() - nTime)/1000.0;
 
     // Minting successfully finished. Show some stats for entertainment.
-    QString strStatsHeader = tr("Successfully minted ") + ui->labelMintAmountValue->text() + tr(" zPIV in ") + 
+    QString strStatsHeader = tr("Successfully minted ") + ui->labelMintAmountValue->text() + tr(" zARC in ") + 
                              QString::number(fDuration) + tr(" sec. Used denominations:\n");
     
     // Clear amount to avoid double spending when accidentally clicking twice
@@ -240,14 +240,14 @@ void PrivacyDialog::on_pushButtonSpentReset_clicked()
     return;
 }
 
-void PrivacyDialog::on_pushButtonSpendzPIV_clicked()
+void PrivacyDialog::on_pushButtonSpendzARC_clicked()
 {
 
     if (!walletModel || !walletModel->getOptionsModel() || !pwalletMain)
         return;
 
     if (GetAdjustedTime() < GetSporkValue(SPORK_17_ENABLE_ZEROCOIN)) {
-        QMessageBox::information(this, tr("Spend Zerocoin"), tr("Zerocoin functionality is not enabled on the PIVX network yet."), QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::information(this, tr("Spend Zerocoin"), tr("Zerocoin functionality is not enabled on the ArepaCoin network yet."), QMessageBox::Ok, QMessageBox::Ok);
         return;
     }
 
@@ -259,12 +259,12 @@ void PrivacyDialog::on_pushButtonSpendzPIV_clicked()
             // Unlock wallet was cancelled
             return;
         }
-        // Wallet is unlocked now, sedn zPIV
-        sendzPIV();
+        // Wallet is unlocked now, sedn zARC
+        sendzARC();
         return;
     }
-    // Wallet already unlocked or not encrypted at all, send zPIV
-    sendzPIV();
+    // Wallet already unlocked or not encrypted at all, send zARC
+    sendzARC();
 }
 
 void PrivacyDialog::on_pushButtonZPivControl_clicked()
@@ -285,7 +285,7 @@ static inline int64_t roundint64(double d)
     return (int64_t)(d > 0 ? d + 0.5 : d - 0.5);
 }
 
-void PrivacyDialog::sendzPIV()
+void PrivacyDialog::sendzARC()
 {
     QSettings settings;
 
@@ -302,7 +302,7 @@ void PrivacyDialog::sendzPIV()
     }
 
     // Double is allowed now
-    double dAmount = ui->zPIVpayAmount->text().toDouble();
+    double dAmount = ui->zARCpayAmount->text().toDouble();
     CAmount nAmount = roundint64(dAmount* COIN);
 
     // Check amount validity
@@ -311,14 +311,14 @@ void PrivacyDialog::sendzPIV()
         return;
     }
 
-    // Convert change to zPIV
+    // Convert change to zARC
     bool fMintChange = ui->checkBoxMintChange->isChecked();
 
     // Persist minimize change setting
     fMinimizeChange = ui->checkBoxMinimizeChange->isChecked();
     settings.setValue("fMinimizeChange", fMinimizeChange);
 
-    // Warn for additional fees if amount is not an integer and change as zPIV is requested
+    // Warn for additional fees if amount is not an integer and change as zARC is requested
     bool fWholeNumber = floor(dAmount) == dAmount;
     double dzFee = 0.0;
 
@@ -327,7 +327,7 @@ void PrivacyDialog::sendzPIV()
 
     if(!fWholeNumber && fMintChange){
         QString strFeeWarning = "You've entered an amount with fractional digits and want the change to be converted to Zerocoin.<br /><br /><b>";
-        strFeeWarning += QString::number(dzFee, 'f', 8) + " PIV </b>will be added to the standard transaction fees!<br />";
+        strFeeWarning += QString::number(dzFee, 'f', 8) + " ARC </b>will be added to the standard transaction fees!<br />";
         QMessageBox::StandardButton retval = QMessageBox::question(this, tr("Confirm additional Fees"),
             strFeeWarning,
             QMessageBox::Yes | QMessageBox::Cancel,
@@ -353,7 +353,7 @@ void PrivacyDialog::sendzPIV()
 
     // General info
     QString strQuestionString = tr("Are you sure you want to send?<br /><br />");
-    QString strAmount = "<b>" + QString::number(dAmount, 'f', 8) + " zPIV</b>";
+    QString strAmount = "<b>" + QString::number(dAmount, 'f', 8) + " zARC</b>";
     QString strAddress = tr(" to address ") + QString::fromStdString(address.ToString()) + strAddressLabel + " <br />";
 
     if(ui->payTo->text().isEmpty()){
@@ -385,7 +385,7 @@ void PrivacyDialog::sendzPIV()
         vMintsSelected = ZPivControlDialog::GetSelectedMints();
     }
 
-    // Spend zPIV
+    // Spend zARC
     CWalletTx wtxNew;
     CZerocoinSpendReceipt receipt;
     bool fSuccess = pwalletMain->SpendZerocoin(nAmount, nSecurityLevel, wtxNew, receipt, vMintsSelected, fMintChange, fMinimizeChange, &address);
@@ -398,7 +398,7 @@ void PrivacyDialog::sendzPIV()
         return;
     }
 
-    // Clear zpiv selector in case it was used
+    // Clear zarc selector in case it was used
     ZPivControlDialog::listSelectedMints.clear();
 
     // Some statistics for entertainment
@@ -436,7 +436,7 @@ void PrivacyDialog::sendzPIV()
     strReturn += strStats;
 
     // Clear amount to avoid double spending when accidentally clicking twice
-    ui->zPIVpayAmount->setText ("0");
+    ui->zARCpayAmount->setText ("0");
 
     ui->TEMintStatus->setPlainText(strReturn);
     ui->TEMintStatus->repaint();
@@ -546,7 +546,7 @@ void PrivacyDialog::setBalance(const CAmount& balance,         const CAmount& un
 
         strDenomStats = strUnconfirmed + QString::number(mapDenomBalances.at(denom)) + " x " +
                         QString::number(nCoins) + " = <b>" + 
-                        QString::number(nSumPerCoin) + " zPIV </b>";
+                        QString::number(nSumPerCoin) + " zARC </b>";
         
         switch (nCoins) {
             case libzerocoin::CoinDenomination::ZQ_ONE: 
@@ -578,9 +578,9 @@ void PrivacyDialog::setBalance(const CAmount& balance,         const CAmount& un
                 break;
         }
     }
-    ui->labelzAvailableAmount->setText(QString::number(zerocoinBalance/COIN) + QString(" zPIV "));
-    ui->labelzAvailableAmount_2->setText(QString::number(zerocoinBalance/COIN) + QString(" zPIV "));
-    ui->labelzPIVAmountValue->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, balance - immatureBalance, false, BitcoinUnits::separatorAlways));
+    ui->labelzAvailableAmount->setText(QString::number(zerocoinBalance/COIN) + QString(" zARC "));
+    ui->labelzAvailableAmount_2->setText(QString::number(zerocoinBalance/COIN) + QString(" zARC "));
+    ui->labelzARCAmountValue->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, balance - immatureBalance, false, BitcoinUnits::separatorAlways));
 }
 
 void PrivacyDialog::updateDisplayUnit()
@@ -595,5 +595,5 @@ void PrivacyDialog::updateDisplayUnit()
 
 void PrivacyDialog::showOutOfSyncWarning(bool fShow)
 {
-    ui->labelzPIVSyncStatus->setVisible(fShow);
+    ui->labelzARCSyncStatus->setVisible(fShow);
 }

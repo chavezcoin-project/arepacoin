@@ -694,13 +694,13 @@ QWidget#PrivacyDialog QLabel {
 border:0px solid #000;
 }
 
-QWidget#PrivacyDialog QLabel#zPIVLabel {
+QWidget#PrivacyDialog QLabel#zARCLabel {
 font-size:14px;
 color:#ffffff;
 background-color:#5B4C7C;
 }
 
-QWidget#PrivacyDialog QLabel#oPIVLabel {
+QWidget#PrivacyDialog QLabel#oARCLabel {
 font-size:14px;
 color:#ffffff;
 background-color:#5B4C7C;
@@ -878,7 +878,7 @@ font-weight:normal;
 min-height:30px;
 }
 
-QWidget .QFrame#frame .QLabel#label_5 { /* PIV Balances Label */
+QWidget .QFrame#frame .QLabel#label_5 { /* ARC Balances Label */
 qproperty-alignment: 'AlignVCenter | AlignLeft';
 min-width:160px;
 background-color:transparent;
@@ -1015,7 +1015,7 @@ margin-right:5px;
 padding-right:5px;
 }
 
-QWidget .QFrame#frame_4 .QLabel#labelzBalanceText { /* Available zPIV Label */
+QWidget .QFrame#frame_4 .QLabel#labelzBalanceText { /* Available zARC Label */
 qproperty-alignment: 'AlignVCenter | AlignRight';
 min-width:160px;
 background-color:#5B4C7C;
@@ -1027,7 +1027,7 @@ font-size:14px;
 /* min-height:35px; */
 }
 
-QWidget .QFrame#frame_4 .QLabel#labelzBalance { /* Available zPIV Balance */
+QWidget .QFrame#frame_4 .QLabel#labelzBalance { /* Available zARC Balance */
 qproperty-alignment: 'AlignVCenter | AlignLeft';
 font-size:12px;
 font-weight:bold;
@@ -1046,7 +1046,7 @@ margin-right:5px;
 padding-right:5px;
 }
 
-QWidget .QFrame#frame_3 .QLabel#labelBalanceTextz { /* Available PIV Label */
+QWidget .QFrame#frame_3 .QLabel#labelBalanceTextz { /* Available ARC Label */
 qproperty-alignment: 'AlignVCenter | AlignRight';
 min-width:160px;
 background-color:#5B4C7C;
@@ -1058,7 +1058,7 @@ font-size:14px;
 /* min-height:35px; */
 }
 
-QWidget .QFrame#frame_3 .QLabel#labelBalancez { /* Available PIV Balance */
+QWidget .QFrame#frame_3 .QLabel#labelBalancez { /* Available ARC Balance */
 qproperty-alignment: 'AlignVCenter | AlignLeft';
 font-size:12px;
 font-weight:bold;
@@ -1066,7 +1066,7 @@ color:#5B4C7C;
 margin-left:0px;
 }
 
-QWidget .QFrame#frame_3 .QLabel#labelzBalanceTextz { /* Available zPIV Label */
+QWidget .QFrame#frame_3 .QLabel#labelzBalanceTextz { /* Available zARC Label */
 qproperty-alignment: 'AlignVCenter | AlignRight';
 min-width:160px;
 background-color:#5B4C7C;
@@ -1078,7 +1078,7 @@ font-size:14px;
 /* min-height:35px; */
 }
 
-QWidget .QFrame#frame_3 .QLabel#labelzBalancez { /* Available zPIV Balance */
+QWidget .QFrame#frame_3 .QLabel#labelzBalancez { /* Available zARC Balance */
 qproperty-alignment: 'AlignVCenter | AlignLeft';
 font-size:12px;
 font-weight:bold;
@@ -1114,7 +1114,7 @@ min-height:100px;
 margin-right:20px;
 margin-left:0;
 margin-top:0;
-background-image: url(':/images/pivx_logo_horizontal');
+background-image: url(':/images/arepacoin_logo_horizontal');
 background-repeat:none;
 }
 

@@ -5,7 +5,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/pivx-config.h"
+#include "config/arepacoin-config.h"
 #endif
 
 #include "optionsmodel.h"
@@ -61,7 +61,7 @@ void OptionsModel::Init()
 
     // Display
     if (!settings.contains("nDisplayUnit"))
-        settings.setValue("nDisplayUnit", BitcoinUnits::PIV);
+        settings.setValue("nDisplayUnit", BitcoinUnits::ARC);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
 
     if (!settings.contains("strThirdPartyTxUrls"))
@@ -152,7 +152,7 @@ void OptionsModel::Init()
     if (settings.contains("nPreferredDenom"))
         SoftSetArg("-preferredDenom", settings.value("nPreferredDenom").toString().toStdString());
     if (settings.contains("nAnonymizePivxAmount"))
-        SoftSetArg("-anonymizepivxamount", settings.value("nAnonymizePivxAmount").toString().toStdString());
+        SoftSetArg("-anonymizearepacoinamount", settings.value("nAnonymizePivxAmount").toString().toStdString());
 
     language = settings.value("language").toString();
 }
@@ -163,7 +163,7 @@ void OptionsModel::Reset()
 
     // Remove all entries from our QSettings object
     settings.clear();
-    resetSettings = true; // Needed in pivx.cpp during shotdown to also remove the window positions
+    resetSettings = true; // Needed in arepacoin.cpp during shotdown to also remove the window positions
 
     // default setting for OptionsModel::StartAtStartup - disabled
     if (GUIUtil::GetStartOnSystemStartup())
