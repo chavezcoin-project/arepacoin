@@ -237,10 +237,10 @@ Value stop(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "stop\n"
-            "\nStop PIVX server.");
+            "\nStop ArepaCoin server.");
     // Shutdown will take long enough that the response should get back
     StartShutdown();
-    return "PIVX server stopping";
+    return "ArepaCoin server stopping";
 }
 
 
@@ -318,35 +318,35 @@ static const CRPCCommand vRPCCommands[] =
         {"hidden", "setmocktime", &setmocktime, true, false, false},
 
         /* Pivx features */
-        {"pivx", "masternode", &masternode, true, true, false},
-        {"pivx", "listmasternodes", &listmasternodes, true, true, false},
-        {"pivx", "getmasternodecount", &getmasternodecount, true, true, false},
-        {"pivx", "masternodeconnect", &masternodeconnect, true, true, false},
-        {"pivx", "masternodecurrent", &masternodecurrent, true, true, false},
-        {"pivx", "masternodedebug", &masternodedebug, true, true, false},
-        {"pivx", "startmasternode", &startmasternode, true, true, false},
-        {"pivx", "createmasternodekey", &createmasternodekey, true, true, false},
-        {"pivx", "getmasternodeoutputs", &getmasternodeoutputs, true, true, false},
-        {"pivx", "listmasternodeconf", &listmasternodeconf, true, true, false},
-        {"pivx", "getmasternodestatus", &getmasternodestatus, true, true, false},
-        {"pivx", "getmasternodewinners", &getmasternodewinners, true, true, false},
-        {"pivx", "getmasternodescores", &getmasternodescores, true, true, false},
-        {"pivx", "mnbudget", &mnbudget, true, true, false},
-        {"pivx", "preparebudget", &preparebudget, true, true, false},
-        {"pivx", "submitbudget", &submitbudget, true, true, false},
-        {"pivx", "mnbudgetvote", &mnbudgetvote, true, true, false},
-        {"pivx", "getbudgetvotes", &getbudgetvotes, true, true, false},
-        {"pivx", "getnextsuperblock", &getnextsuperblock, true, true, false},
-        {"pivx", "getbudgetprojection", &getbudgetprojection, true, true, false},
-        {"pivx", "getbudgetinfo", &getbudgetinfo, true, true, false},
-        {"pivx", "mnbudgetrawvote", &mnbudgetrawvote, true, true, false},
-        {"pivx", "mnfinalbudget", &mnfinalbudget, true, true, false},
-        {"pivx", "checkbudgets", &checkbudgets, true, true, false},
-        {"pivx", "mnsync", &mnsync, true, true, false},
-        {"pivx", "spork", &spork, true, true, false},
-        {"pivx", "getpoolinfo", &getpoolinfo, true, true, false},
+        {"arepacoin", "masternode", &masternode, true, true, false},
+        {"arepacoin", "listmasternodes", &listmasternodes, true, true, false},
+        {"arepacoin", "getmasternodecount", &getmasternodecount, true, true, false},
+        {"arepacoin", "masternodeconnect", &masternodeconnect, true, true, false},
+        {"arepacoin", "masternodecurrent", &masternodecurrent, true, true, false},
+        {"arepacoin", "masternodedebug", &masternodedebug, true, true, false},
+        {"arepacoin", "startmasternode", &startmasternode, true, true, false},
+        {"arepacoin", "createmasternodekey", &createmasternodekey, true, true, false},
+        {"arepacoin", "getmasternodeoutputs", &getmasternodeoutputs, true, true, false},
+        {"arepacoin", "listmasternodeconf", &listmasternodeconf, true, true, false},
+        {"arepacoin", "getmasternodestatus", &getmasternodestatus, true, true, false},
+        {"arepacoin", "getmasternodewinners", &getmasternodewinners, true, true, false},
+        {"arepacoin", "getmasternodescores", &getmasternodescores, true, true, false},
+        {"arepacoin", "mnbudget", &mnbudget, true, true, false},
+        {"arepacoin", "preparebudget", &preparebudget, true, true, false},
+        {"arepacoin", "submitbudget", &submitbudget, true, true, false},
+        {"arepacoin", "mnbudgetvote", &mnbudgetvote, true, true, false},
+        {"arepacoin", "getbudgetvotes", &getbudgetvotes, true, true, false},
+        {"arepacoin", "getnextsuperblock", &getnextsuperblock, true, true, false},
+        {"arepacoin", "getbudgetprojection", &getbudgetprojection, true, true, false},
+        {"arepacoin", "getbudgetinfo", &getbudgetinfo, true, true, false},
+        {"arepacoin", "mnbudgetrawvote", &mnbudgetrawvote, true, true, false},
+        {"arepacoin", "mnfinalbudget", &mnfinalbudget, true, true, false},
+        {"arepacoin", "checkbudgets", &checkbudgets, true, true, false},
+        {"arepacoin", "mnsync", &mnsync, true, true, false},
+        {"arepacoin", "spork", &spork, true, true, false},
+        {"arepacoin", "getpoolinfo", &getpoolinfo, true, true, false},
 #ifdef ENABLE_WALLET
-        {"pivx", "obfuscation", &obfuscation, false, false, true}, /* not threadSafe because of SendMoney */
+        {"arepacoin", "obfuscation", &obfuscation, false, false, true}, /* not threadSafe because of SendMoney */
 
         /* Wallet */
         {"wallet", "addmultisigaddress", &addmultisigaddress, true, false, true},
@@ -625,16 +625,16 @@ void StartRPCThreads()
         unsigned char rand_pwd[32];
         GetRandBytes(rand_pwd, 32);
         uiInterface.ThreadSafeMessageBox(strprintf(
-                                             _("To use pivxd, or the -server option to pivx-qt, you must set an rpcpassword in the configuration file:\n"
+                                             _("To use arepacoind, or the -server option to arepacoin-qt, you must set an rpcpassword in the configuration file:\n"
                                                "%s\n"
                                                "It is recommended you use the following random password:\n"
-                                               "rpcuser=pivxrpc\n"
+                                               "rpcuser=arepacoinrpc\n"
                                                "rpcpassword=%s\n"
                                                "(you do not need to remember this password)\n"
                                                "The username and password MUST NOT be the same.\n"
                                                "If the file does not exist, create it with owner-readable-only file permissions.\n"
                                                "It is also recommended to set alertnotify so you are notified of problems;\n"
-                                               "for example: alertnotify=echo %%s | mail -s \"PIVX Alert\" admin@foo.com\n"),
+                                               "for example: alertnotify=echo %%s | mail -s \"ArepaCoin Alert\" admin@foo.com\n"),
                                              GetConfigFile().string(),
                                              EncodeBase58(&rand_pwd[0], &rand_pwd[0] + 32)),
             "", CClientUIInterface::MSG_ERROR | CClientUIInterface::SECURE);
@@ -1085,7 +1085,7 @@ std::vector<std::string> CRPCTable::listCommands() const
 
 std::string HelpExampleCli(string methodname, string args)
 {
-    return "> pivx-cli " + methodname + " " + args + "\n";
+    return "> arepacoin-cli " + methodname + " " + args + "\n";
 }
 
 std::string HelpExampleRpc(string methodname, string args)

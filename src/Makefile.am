@@ -66,15 +66,15 @@ bin_PROGRAMS =
 TESTS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += pivxd
+  bin_PROGRAMS += arepacoind
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += pivx-cli pivx-tx
+  bin_PROGRAMS += arepacoin-cli arepacoin-tx
 endif
 
 .PHONY: FORCE
-# pivx core #
+# arepacoin core #
 BITCOIN_CORE_H = \
   activemasternode.h \
   addrman.h \
@@ -189,7 +189,7 @@ obj/build.h: FORCE
 	  $(abs_top_srcdir)
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between pivxd and pivx-qt
+# server: shared between arepacoind and arepacoin-qt
 libbitcoin_server_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
 libbitcoin_server_a_SOURCES = \
   addrman.cpp \
@@ -235,7 +235,7 @@ libbitcoin_zmq_a_SOURCES = \
   zmq/zmqpublishnotifier.cpp
 endif
 
-# wallet: shared between pivxd and pivx-qt, but only linked
+# wallet: shared between arepacoind and arepacoin-qt, but only linked
 # when wallet enabled
 
 libbitcoin_wallet_a_CFLAGS = -fPIC
@@ -331,7 +331,7 @@ libzerocoin_libbitcoin_zerocoin_a_SOURCES = \
   libzerocoin/Params.cpp \
   libzerocoin/SerialNumberSignatureOfKnowledge.cpp
 
-# common: shared between pivxd, and pivx-qt and non-server tools
+# common: shared between arepacoind, and arepacoin-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(BITCOIN_INCLUDES)
 libbitcoin_common_a_SOURCES = \
   allocators.cpp \
@@ -390,7 +390,7 @@ libbitcoin_util_a_SOURCES += compat/glibc_compat.cpp
 libbitcoin_util_a_SOURCES += compat/glibcxx_compat.cpp
 endif
 
-# cli: shared between pivx-cli and pivx-qt
+# cli: shared between arepacoin-cli and arepacoin-qt
 libbitcoin_cli_a_CPPFLAGS = $(BITCOIN_INCLUDES)
 libbitcoin_cli_a_SOURCES = \
   rpcclient.cpp \
@@ -400,7 +400,7 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-pivxd_LDADD = \
+arepacoind_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UNIVALUE) \
@@ -412,26 +412,26 @@ pivxd_LDADD = \
   $(LIBSECP256K1)
 
 if ENABLE_ZMQ
-pivxd_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+arepacoind_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
 endif
 
 if ENABLE_WALLET
-pivxd_LDADD += libbitcoin_wallet.a
+arepacoind_LDADD += libbitcoin_wallet.a
 endif
-pivxd_SOURCES = pivxd.cpp
+arepacoind_SOURCES = arepacoind.cpp
 #
 
 if TARGET_WINDOWS
-pivxd_SOURCES += pivxd-res.rc
+arepacoind_SOURCES += arepacoind-res.rc
 endif
 
-pivxd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
-pivxd_CPPFLAGS = $(BITCOIN_INCLUDES)
-pivxd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+arepacoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+arepacoind_CPPFLAGS = $(BITCOIN_INCLUDES)
+arepacoind_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 
-# pivx-cli binary #
-pivx_cli_LDADD = \
+# arepacoin-cli binary #
+arepacoin_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBBITCOIN_UTIL) \
   $(BOOST_LIBS) \
@@ -439,14 +439,14 @@ pivx_cli_LDADD = \
   $(CRYPTO_LIBS) \
   $(EVENT_LIBS)
 
-pivx_cli_SOURCES = \
-  pivx-cli.cpp
+arepacoin_cli_SOURCES = \
+  arepacoin-cli.cpp
 
-pivx_cli_CPPFLAGS = $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+arepacoin_cli_CPPFLAGS = $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
 #
 
-# pivx-tx binary #
-pivx_tx_LDADD = \
+# arepacoin-tx binary #
+arepacoin_tx_LDADD = \
   $(LIBBITCOIN_UNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_ZEROCOIN) \
@@ -456,15 +456,15 @@ pivx_tx_LDADD = \
   $(BOOST_LIBS) \
   $(CRYPTO_LIBS)
 
-pivx_tx_SOURCES = pivx-tx.cpp
-pivx_tx_CPPFLAGS = $(BITCOIN_INCLUDES)
+arepacoin_tx_SOURCES = arepacoin-tx.cpp
+arepacoin_tx_CPPFLAGS = $(BITCOIN_INCLUDES)
 #
-pivx_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+arepacoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-pivx_cli_SOURCES += pivx-cli-res.rc
+arepacoin_cli_SOURCES += arepacoin-cli-res.rc
 endif
-pivx_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+arepacoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if BUILD_BITCOIN_LIBS
 include_HEADERS = script/bitcoinconsensus.h

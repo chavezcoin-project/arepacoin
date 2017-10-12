@@ -60,7 +60,7 @@
                </font>
               </property>
               <property name="text">
-               <string>PIV Balances</string>
+               <string>ARC Balances</string>
               </property>
              </widget>
             </item>
@@ -70,7 +70,7 @@
                <cursorShape>WhatsThisCursor</cursorShape>
               </property>
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the PIVX network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the ArepaCoin network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="styleSheet">
                <string notr="true">QLabel { color: red; }</string>
@@ -1034,7 +1034,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="labelBalanceTextz">
                <property name="text">
-                <string>PIV:</string>
+                <string>ARC:</string>
                </property>
               </widget>
              </item>
@@ -1066,12 +1066,12 @@
              <item row="2" column="0">
               <widget class="QLabel" name="labelzBalanceTextz">
                <property name="text">
-                <string>zPIV:</string>
+                <string>zARC:</string>
                </property>
               </widget>
              </item>
              <item row="1" column="2">
-              <widget class="QLabel" name="labelPIVPercent">
+              <widget class="QLabel" name="labelARCPercent">
                <property name="text">
                 <string>0 %</string>
                </property>
@@ -1081,7 +1081,7 @@
               </widget>
              </item>
              <item row="2" column="2">
-              <widget class="QLabel" name="labelzPIVPercent">
+              <widget class="QLabel" name="labelzARCPercent">
                <property name="text">
                 <string>0 %</string>
                </property>
@@ -1218,7 +1218,7 @@
              <item row="1" column="0">
               <widget class="QLabel" name="labelzBalanceText">
                <property name="text">
-                <string>zPIV:</string>
+                <string>zARC:</string>
                </property>
               </widget>
              </item>
@@ -1291,7 +1291,7 @@
                <cursorShape>WhatsThisCursor</cursorShape>
               </property>
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the PIVX network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the ArepaCoin network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="styleSheet">
                <string notr="true">QLabel { color: red; }</string>
